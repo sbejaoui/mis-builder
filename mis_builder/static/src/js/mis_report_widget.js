@@ -31,6 +31,7 @@ odoo.define('mis_builder.widget', function(require) {
             var self = this;
             self._super(field_manager, node);
             self.MisReportInstance = new Model('mis.report.instance');
+            this.hide_analytic_filter = true;
         },
 
         /**
@@ -77,6 +78,16 @@ odoo.define('mis_builder.widget', function(require) {
                 'account.group_account_user'
             ).then(function(result) {
                 self.show_settings = result;
+            });
+            self.MisReportInstance.call(
+                "read",
+                [self._instance_id(), ['hide_analytic_filter']],
+            ).then(function(result){
+                if (result){
+                    if (!result[0]['hide_analytic_filter']){
+                        self.hide_analytic_filter = false;
+                    }
+                }
             });
 
             return $.when(this._super.apply(this, arguments), def1, def2);

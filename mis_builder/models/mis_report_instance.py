@@ -444,6 +444,8 @@ class MisReportInstance(models.Model):
     analytic_account_id = fields.Many2one(
         comodel_name='account.analytic.account', string='Analytic Account',
         oldname='account_analytic_id')
+    hide_analytic_filter = fields.Boolean(string="Hide analytic filter",
+                                          default=False)
 
     @api.onchange('company_id', 'multi_company')
     def _onchange_company(self):
